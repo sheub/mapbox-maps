@@ -10,6 +10,7 @@ import {defaultState} from './reducers/index';
 import apiCaller from './middlewares/apiCaller';
 import urlTinkerer from './middlewares/urlTinkerer';
 import reducers from './reducers/index';
+import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
 
 import App from './components/App';
 
@@ -45,11 +46,25 @@ store.subscribe(() => {
   });
   localStorage.setItem('persistedState', JSON.stringify(persistedState));
 });
+const theme = createMuiTheme({
+  palette:
+  {
+      primary: {
+          main: "#14222D",
+      },
+      secondary: {
+          main: "#9CB2C0",
+      }
+  },
 
+});
 ReactDOM.render(
+  
   <Provider store={store}>
     <ConnectedRouter history={history}>
+    <MuiThemeProvider theme={theme}>
       <Route path="*" component={App}/>
+      </MuiThemeProvider>
     </ConnectedRouter>
   </Provider>,
   document.getElementById('root')

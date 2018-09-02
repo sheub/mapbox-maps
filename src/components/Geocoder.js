@@ -173,9 +173,10 @@ Geocoder.propTypes = {
   searchString: PropTypes.string,
   writeSearch: PropTypes.func
 };
-
+// https://api-adresse.data.gouv.fr/search/?q=
 Geocoder.defaultProps = {
   endpoint: 'https://api.tiles.mapbox.com',
+  // endpoint: 'https://api-adresse.data.gouv.fr',
   inputPosition: 'top',
   inputPlaceholder: 'Search',
   source: 'mapbox.places',
@@ -190,7 +191,9 @@ function search(endpoint, source, accessToken, proximity, bbox, types, query, ca
   // but the results here are independent from the apps' state
   var searchTime = new Date();
   var uri = endpoint + '/geocoding/v5/'
+  // var uri = endpoint + '/search/?q='
     + source + '/' + encodeURIComponent(query) + '.json'
+    // + encodeURIComponent(query)
     + '?access_token=' + accessToken
     + (proximity ? '&proximity=' + proximity : '')
     + (bbox ? '&bbox=' + bbox : '')

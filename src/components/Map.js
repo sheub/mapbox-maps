@@ -52,7 +52,7 @@ class MapComponent extends Component {
     const map = new mapboxgl.Map({
       container: 'map',
       style: style,
-      center: this.props.center,
+      center: [2, 46.5], //this.props.center,
       zoom: this.props.zoom,
       minZoom: 2,
       maxZoom: 21
@@ -280,10 +280,18 @@ class MapComponent extends Component {
     }
 
     if (key) {
+      let place_name = null; 
+      if(feature.properties.name)
+      {
+        place_name = feature.properties.name
+      }
+      else
+        place_name = feature.properties.label;
+
       this.props.setStateValue(key, {
         'type': 'Feature',
-        'place_name': feature.properties.name,
-        'properties': {},
+        'place_name': place_name,
+        'properties': feature.properties,
         'geometry': feature.geometry
       });
       this.props.triggerMapUpdate();
@@ -405,9 +413,9 @@ class MapComponent extends Component {
         });
       }, 300);
     } else {
-      this.map.getStyle().layers.forEach(layer => {
-        if (layer.source === 'composite') this.map.setLayoutProperty(layer.id, 'visibility', 'visible');
-      });
+      // this.map.getStyle().layers.forEach(layer => {
+      //   if (layer.source === 'composite') this.map.setLayoutProperty(layer.id, 'visibility', 'visible');
+      // });
       this.map.setLayoutProperty('satellite', 'visibility', 'none');
     }
 
@@ -439,6 +447,7 @@ class MapComponent extends Component {
       'poi-parks-scalerank3',
       'poi-scalerank4',
       'poi-parks-scalerank4',
+      'edifice-geres-par-les-monumen-3inr6v',
     ];
   }
 
